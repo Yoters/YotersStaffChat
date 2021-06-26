@@ -1,0 +1,41 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '4.0.2'
+}
+
+shadowJar {
+    baseName = 'PatsAPI-' + version
+    classifier = null
+    version = '1.0-SNAPSHOT'
+}
+group = 'com.yoters'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'sonatype'
+        url = 'https://oss.sonatype.org/content/groups/public/'
+    }
+}
+
+dependencies {
+    compileOnly 'net.md-5:bungeecord-api:1.12-SNAPSHOT'
+    implementation 'org.bstats:bstats-bukkit:2.2.1'
+}
+
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        filter ReplaceTokens, tokens: [version: version]
+    }
+}
+
+shadowJar {
+    baseName = 'YotersStaffChat-' + version
+    classifier = null
+    version = null
+}
