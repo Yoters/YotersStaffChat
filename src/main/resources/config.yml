@@ -1,0 +1,6 @@
+staffchat:
+  enabled: true
+  permission: staffchat.staff
+adminchat:
+  enabled: true
+  permission: staffchat.admin
