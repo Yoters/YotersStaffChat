@@ -1,4 +1,4 @@
 name: BungeeStaffChat
-version: @version@
+version: 1.1
 main: com.yoters.bungeestaffchat.BungeeStaffChat
 description: Staff Chat for BungeeCord

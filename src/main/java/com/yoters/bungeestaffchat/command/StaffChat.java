@@ -55,10 +55,15 @@ public class StaffChat extends Command {
                     String server = player.getServer().getInfo().getName();
                     String serverName = server.substring(0, 1).toUpperCase() + server.substring(1);
 
-                    BaseComponent[] msg = new ComponentBuilder("(" + serverName + ")").color(ChatColor.DARK_AQUA)
-                            .append("[SC]").color(ChatColor.AQUA)
-                            .append(player.getName() + ":").color(ChatColor.WHITE)
-                            .append(builder.toString()).color(ChatColor.AQUA)
+                    String serverNameColor = BungeeStaffChat.SINGLETON.config.getString("staffchat.server-name-color");
+                    String tagColor = BungeeStaffChat.SINGLETON.config.getString("staffchat.sc-tag-color");
+                    String nameColor = BungeeStaffChat.SINGLETON.config.getString("staffchat.player-name-color");
+                    String messageColor = BungeeStaffChat.SINGLETON.config.getString("staffchat.message-color");
+
+                    BaseComponent[] msg = new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', serverNameColor + "(" + serverName + ")"))
+                            .append(ChatColor.translateAlternateColorCodes('&', tagColor + "[SC] "))
+                            .append(ChatColor.translateAlternateColorCodes('&', nameColor + player.getName() + ": "))
+                            .append(ChatColor.translateAlternateColorCodes('&', messageColor + builder))
                             .create();
                     proxiedPlayer.sendMessage(msg);
                 }

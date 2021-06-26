@@ -1,6 +1,14 @@
 staffchat:
   enabled: true
   permission: staffchat.staff
+  server-name-color: "&3"
+  sc-tag-color: "&b"
+  player-name-color: "&f"
+  message-color: "&b"
 adminchat:
   enabled: true
   permission: staffchat.admin
+  server-name-color: "&3"
+  ac-tag-color: "&c"
+  player-name-color: "&f"
+  message-color: "&c"

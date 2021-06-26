@@ -59,10 +59,15 @@ public class AdminChat extends Command {
                     String server = player.getServer().getInfo().getName();
                     String serverName = server.substring(0, 1).toUpperCase() + server.substring(1);
 
-                    BaseComponent[] msg = new ComponentBuilder("(" + serverName + ")").color(ChatColor.DARK_AQUA)
-                            .append("[AC]").color(ChatColor.RED)
-                            .append(player.getName() + ":").color(ChatColor.WHITE)
-                            .append(builder.toString()).color(ChatColor.RED)
+                    String serverNameColor = BungeeStaffChat.SINGLETON.config.getString("adminchat.server-name-color");
+                    String tagColor = BungeeStaffChat.SINGLETON.config.getString("adminchat.ac-tag-color");
+                    String nameColor = BungeeStaffChat.SINGLETON.config.getString("adminchat.player-name-color");
+                    String messageColor = BungeeStaffChat.SINGLETON.config.getString("adminchat.message-color");
+
+                    BaseComponent[] msg = new ComponentBuilder(ChatColor.translateAlternateColorCodes('&', serverNameColor + "(" + serverName + ")"))
+                            .append(ChatColor.translateAlternateColorCodes('&', tagColor + "[AC] "))
+                            .append(ChatColor.translateAlternateColorCodes('&', nameColor + player.getName() + ": "))
+                            .append(ChatColor.translateAlternateColorCodes('&', messageColor + builder))
                             .create();
                     proxiedPlayer.sendMessage(msg);
                 }
