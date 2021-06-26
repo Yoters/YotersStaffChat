@@ -1,12 +1,12 @@
 package com.yoters.bungeestaffchat.command;
 
 
+import com.yoters.bungeestaffchat.BungeeStaffChat;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 
@@ -18,50 +18,54 @@ public class AdminChat extends Command {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if(!(sender instanceof ProxiedPlayer)) {
-            ComponentBuilder message = new ComponentBuilder("You must be a ProxiedPlayer to do this!").color(ChatColor.RED);
 
-            sender.sendMessage(message.create());
+        if (BungeeStaffChat.SINGLETON.config.getBoolean("adminchat.enabled")) {
 
-            return;
-        }
+            if (!(sender instanceof ProxiedPlayer)) {
+                ComponentBuilder message = new ComponentBuilder("You must be a ProxiedPlayer to do this!").color(ChatColor.RED);
 
-        ProxiedPlayer player = (ProxiedPlayer) sender;
+                sender.sendMessage(message.create());
 
-        if(!(player.hasPermission("staffchat.admin") || player.hasPermission("*"))) {
-            ComponentBuilder message = new ComponentBuilder("Insufficient permission.").color(ChatColor.RED);
+                return;
+            }
 
-            player.sendMessage(message.create());
+            ProxiedPlayer player = (ProxiedPlayer) sender;
 
-            return;
-        }
+            if (!(player.hasPermission("staffchat.admin") || player.hasPermission("*"))) {
+                ComponentBuilder message = new ComponentBuilder("Insufficient permission.").color(ChatColor.RED);
 
-        if(args.length < 1) {
-            ComponentBuilder message = new ComponentBuilder("Usage: /a [message]").color(ChatColor.RED);
+                player.sendMessage(message.create());
 
-            player.sendMessage(message.create());
+                return;
+            }
 
-            return;
-        }
+            if (args.length < 1) {
+                ComponentBuilder message = new ComponentBuilder("Usage: /a [message]").color(ChatColor.RED);
 
-        StringBuilder builder = new StringBuilder();
+                player.sendMessage(message.create());
 
-        for(String argument : args) {
-            builder.append(argument + " ");
-        }
+                return;
+            }
 
-        for(ProxiedPlayer proxiedPlayer : ProxyServer.getInstance().getPlayers()) {
-            if(proxiedPlayer.hasPermission("staffchat.admin") || proxiedPlayer.hasPermission("*")) {
+            StringBuilder builder = new StringBuilder();
 
-                String server = player.getServer().getInfo().getName();
-                String serverName = server.substring(0, 1).toUpperCase() + server.substring(1);
+            for (String argument : args) {
+                builder.append(argument + " ");
+            }
 
-                BaseComponent[] msg = new ComponentBuilder("(" + serverName + ")").color(ChatColor.DARK_AQUA)
-                        .append("[AC]").color(ChatColor.RED)
-                        .append(player.getName() + ":").color(ChatColor.WHITE)
-                        .append(builder.toString()).color(ChatColor.RED)
-                        .create();
-                proxiedPlayer.sendMessage(msg);
+            for (ProxiedPlayer proxiedPlayer : ProxyServer.getInstance().getPlayers()) {
+                if (proxiedPlayer.hasPermission("staffchat.admin") || proxiedPlayer.hasPermission("*")) {
+
+                    String server = player.getServer().getInfo().getName();
+                    String serverName = server.substring(0, 1).toUpperCase() + server.substring(1);
+
+                    BaseComponent[] msg = new ComponentBuilder("(" + serverName + ")").color(ChatColor.DARK_AQUA)
+                            .append("[AC]").color(ChatColor.RED)
+                            .append(player.getName() + ":").color(ChatColor.WHITE)
+                            .append(builder.toString()).color(ChatColor.RED)
+                            .create();
+                    proxiedPlayer.sendMessage(msg);
+                }
             }
         }
     }
