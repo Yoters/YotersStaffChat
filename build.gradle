@@ -6,9 +6,7 @@ plugins {
 }
 
 shadowJar {
-    baseName = 'PatsAPI-' + version
-    classifier = null
-    version = '1.0-SNAPSHOT'
+    baseName = 'YotersStaffChat-1.1'
 }
 group = 'com.yoters'
 
@@ -32,10 +30,4 @@ processResources {
     from(sourceSets.main.resources.srcDirs) {
         filter ReplaceTokens, tokens: [version: version]
     }
-}
-
-shadowJar {
-    baseName = 'YotersStaffChat-' + version
-    classifier = null
-    version = null
 }
